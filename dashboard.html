@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestão Escolar - Início</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="home">
+
+    <header class="home-header">
+        <h1>Sistema de Gestão Escolar</h1>
+        <nav>
+            <a href="dashboard.html">Início</a>
+            <a href="gestao.html">Gestão</a>
+            <a href="#">Professores</a>
+            <a href="#">Relatórios</a>
+            <a href="#">Turmas</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Organize os horários escolares com facilidade</h1>
+            <p>Professores podem definir presença nas aulas sem precisar avisar direção manualmente.</p>
+
+            <div class="hero-buttons">
+                <a href="#" class="btn primary">Sou Professor</a>
+                <a href="#" class="btn secondary">Sou da Direção</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <h3>📅 Gestão de Horários</h3>
+            <p>Defina e organize os horários das aulas com rapidez.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>👨‍🏫 Status de Presença</h3>
+            <p>Professores informam se irão ou não comparecer à aula.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>📊 Relatórios Inteligentes</h3>
+            <p>Acompanhe dados e frequência em tempo real.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Sistema de Gestão Escolar</p>
+    </footer>
+<style>
+/* ===== Página Inicial ===== */
+
+body, html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.home {
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    color: white;
+}
+
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    border-bottom: 2px solid rgba(255,255,255,0.15);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.home-header nav a {
+    margin-left: 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.home-header nav a:hover {
+    text-decoration: underline;
+}
+
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 40px;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+    padding: 12px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.primary {
+    background: white;
+    color: #2c3e50;
+}
+
+.primary:hover {
+    background: #ecf0f1;
+}
+
+.secondary {
+    border: 2px solid white;
+    color: white;
+}
+
+.secondary:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.features {
+    background: white;
+    color: #2c3e50;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 60px 20px;
+    flex-wrap: wrap;
+}
+
+.feature-card {
+    background: #f4f6f9;
+    padding: 30px;
+    border-radius: 15px;
+    width: 280px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.feature-card h3 {
+    margin-bottom: 15px;
+}
+</style>
+</html>
