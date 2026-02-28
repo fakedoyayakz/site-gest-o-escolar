@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professores</title>
+    <style>
+        /* ===== CSS UNIFICADO ===== */
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --light-bg: #ecf0f1;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        body { background-color: var(--light-bg); color: var(--secondary-color); }
+
+        /* Cabeçalho Principal */
+        .home-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            box-shadow: var(--shadow);
+        }    
+
+        /* Navegação por Abas */
+        .navbar {
+            display: flex;
+            background: var(--white);
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 18px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            border-bottom: 4px solid transparent;
+            transition: var(--transition);
+        }
+
+        .nav-btn:hover { background: #f8f9fa; color: var(--primary-color); }
+        .nav-btn.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+        /* Conteúdo das Views */
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .view { display: none; animation: fadeIn 0.4s ease; }
+        .view.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Cards e Grids */
+        .horarios-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
+        .card { 
+            background: white; border-radius: 10px; padding: 20px; 
+            box-shadow: var(--shadow); border-left: 6px solid var(--primary-color);
+            transition: var(--transition);
+        }
+        .card:hover { transform: translateY(-3px); }
+        .card.presenca-confirmada { border-left-color: var(--success-color); background: #f0fff4; }
+
+        /* Formulários */
+        .form-container { background: white; padding: 30px; border-radius: 10px; box-shadow: var(--shadow); }
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        label { font-weight: 600; font-size: 0.9rem; }
+        input, select, textarea { padding: 12px; border: 2px solid #eee; border-radius: 6px; outline: none; }
+        input:focus { border-color: var(--primary-color); }
+
+        /* Botões */
+        .btn { padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-primary { background: var(--primary-color); color: white; }
+        .btn-success { background: var(--success-color); color: white; }
+        .btn-danger { background: var(--danger-color); color: white; }
+        .btn-secondary { background: #95a5a6; color: white; }
+        .btn:active { transform: scale(0.98); }
+
+        /* Tabelas */
+        .tabela-wrapper { overflow-x: auto; background: white; border-radius: 10px; box-shadow: var(--shadow); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f8f9fa; color: var(--secondary-color); font-weight: 700; }
+
+        /* Estilo Específico Professor */
+        .prof-header { background: #e3f2fd; padding: 20px; border-radius: 10px; margin-bottom: 30px; border: 1px dashed var(--primary-color); }
+    </style>
+</head>
+<body>
+
+    <header class="home-header">
+        <div>
+            <h1 style="font-size: 1.5rem;">🏫 Portal de Gestão Escolar</h1>
+            <p style="font-size: 0.8rem; opacity: 0.8;">Controle de Horários e Presenças</p>
+        </div>
+        <button class="btn btn-secondary" onclick="irParaInicio()">🏠 Tela Inicial</button>
+    </header>
+
+    <nav class="navbar" id="mainNav">
+        <button class="nav-btn" data-view="horarios">📅 Ver Horários</button>
+        <button class="nav-btn" data-view="adicionar">➕ Nova Aula</button>
+        <button class="nav-btn" data-view="professor-view">👨‍🏫 Sou Professor</button>
+        <button class="nav-btn" data-view="gerenciar">⚙️ Configurações</button>
+    </nav>
+
+    <div class="container">
+        
+        <section id="inicio" class="view active" style="text-align: center; padding: 50px 0;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 15px;">Bem-vindo ao Sistema</h2>
+            <p style="color: #666; margin-bottom: 40px;">Selecione sua função para continuar:</p>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-primary" style="padding: 30px 50px; font-size: 1.1rem;" onclick="navegar('horarios')">Visualizar Grade</button>
+                <button class="btn btn-success" style="padding: 30px 50px; font-size: 1.1rem;" onclick="navegar('professor-view')">Portal do Professor</button>
+            </div>
+        </section>
+
+        <section id="horarios" class="view">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Grade Completa</h2>
+                <select id="filterTurma" onchange="exibirHorarios()" style="width: 200px;">
+                    <option value="">Todas as Turmas</option>
+                </select>
+            </div>
+            <div id="horariosGrid" class="horarios-grid"></div>
+        </section>
+
+        <section id="adicionar" class="view">
+            <h2>Cadastrar Nova Aula</h2>
+            <form id="formAula" class="form-container">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Dia da Semana</label>
+                        <select id="dia" required>
+                            <option value="Segunda">Segunda-feira</option>
+                            <option value="Terça">Terça-feira</option>
+                            <option value="Quarta">Quarta-feira</option>
+                            <option value="Quinta">Quinta-feira</option>
+                            <option value="Sexta">Sexta-feira</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Início</label><input type="time" id="horario" required></div>
+                    <div class="form-group"><label>Duração (min)</label><input type="number" id="duracao" value="50"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Turma</label><input type="text" id="turma" placeholder="Ex: 3º Ano A" required></div>
+                    <div class="form-group"><label>Professor</label><input type="text" id="professor" placeholder="Nome completo" required></div>
+                    <div class="form-group"><label>Matéria</label><input type="text" id="materia" placeholder="Ex: Física" required></div>
+                    <div class="form-group"><label>Sala</label><input type="text" id="sala" placeholder="Sala 05"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">✅ Salvar Aula no Sistema</button>
+            </form>
+        </section>
+
+        <section id="professor-view" class="view">
+            <div class="prof-header">
+                <h2>Olá, Professor(a)!</h2>
+                <p>Selecione seu nome abaixo para visualizar sua agenda e confirmar sua presença em sala.</p>
+                <select id="selectProfessorAtivo" onchange="atualizarAgendaProfessor()" style="margin-top: 15px; width: 100%; max-width: 400px; border: 2px solid var(--primary-color);">
+                    <option value="">--- Localize seu nome na lista ---</option>
+                </select>
+            </div>
+            <div id="agendaProfessor" class="horarios-grid">
+                <p style="text-align: center; color: #999; grid-column: 1/-1;">Selecione seu nome para carregar suas aulas.</p>
+            </div>
+        </section>
+
+        <section id="gerenciar" class="view">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Controle Administrativo</h2>
+                <button class="btn btn-danger" onclick="limparTudo()">🗑️ Apagar tudo</button>
+            </div>
+            <div class="tabela-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>Dia</th><th>Hora</th><th>Matéria/Turma</th><th>Professor</th><th>Status</th><th>Ações</th></tr>
+                    </thead>
+                    <tbody id="tabelaCorpo"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        /* ===== JAVASCRIPT INTEGRADO E MELHORADO ===== */
+        let aulas = JSON.parse(localStorage.getItem('aulas')) || [];
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            configurarNavegacao();
+            preencherFiltros();
+            exibirHorarios();
+            preencherListaProfessores();
+            
+            // Se não houver aulas, mostra um alerta amigável
+            if(aulas.length === 0) navegar('adicionar');
+        });
+
+        // Navegação de abas
+        function configurarNavegacao() {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', () => navegar(btn.getAttribute('data-view')));
+            });
+        }
+
+        function navegar(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(viewId).classList.add('active');
+            const btnAtivo = document.querySelector(`[data-view="${viewId}"]`);
+            if(btnAtivo) btnAtivo.classList.add('active');
+
+            // Funções de carga específica
+            if(viewId === 'horarios') exibirHorarios();
+            if(viewId === 'gerenciar') preencherTabela();
+            if(viewId === 'professor-view') preencherListaProfessores();
+        }
+
+        function irParaInicio() {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('inicio').classList.add('active');
+        }
+
+        // Persistência
+        function atualizarBanco() {
+            localStorage.setItem('aulas', JSON.stringify(aulas));
+            preencherFiltros();
+            preencherListaProfessores();
+        }
+
+        // Ações de Aula
+        document.getElementById('formAula').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nova = {
+                id: "ID-" + Date.now(),
+                dia: document.getElementById('dia').value,
+                horario: document.getElementById('horario').value,
+                duracao: document.getElementById('duracao').value,
+                turma: document.getElementById('turma').value,
+                professor: document.getElementById('professor').value,
+                materia: document.getElementById('materia').value,
+                sala: document.getElementById('sala').value || "Não definida",
+                presenca: false
+            };
+            aulas.push(nova);
+            atualizarBanco();
+            alert("Aula registrada com sucesso!");
+            e.target.reset();
+            navegar('horarios');
+        });
+
+        // Renderização da Grade Geral
+        function exibirHorarios() {
+            const grid = document.getElementById('horariosGrid');
+            const filtro = document.getElementById('filterTurma').value;
+            grid.innerHTML = '';
+
+            const filtradas = filtro ? aulas.filter(a => a.turma === filtro) : aulas;
+
+            if(filtradas.length === 0) {
+                grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">Nenhuma aula cadastrada para esta seleção.</p>`;
+                return;
+            }
+
+            filtradas.forEach(a => {
+                grid.innerHTML += `
+                    <div class="card ${a.presenca ? 'presenca-confirmada' : ''}">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="background: var(--primary-color); color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem;">${a.dia}</span>
+                            <span style="font-weight: bold; color: var(--primary-color);">${a.horario}</span>
+                        </div>
+                        <h3 style="margin-bottom: 5px;">${a.materia}</h3>
+                        <p style="font-size: 0.9rem; color: #666;">Turma: <strong>${a.turma}</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">Sala: ${a.sala}</p>
+                        <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px; font-size: 0.85rem;">
+                            👤 Prof. ${a.professor}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Portal do Professor: Lógica de Presença
+        function preencherListaProfessores() {
+            const select = document.getElementById('selectProfessorAtivo');
+            const lista = [...new Set(aulas.map(a => a.professor))].sort();
+            select.innerHTML = '<option value="">--- Localize seu nome na lista ---</option>';
+            lista.forEach(p => select.innerHTML += `<option value="${p}">${p}</option>`);
+        }
+
+        function atualizarAgendaProfessor() {
+            const prof = document.getElementById('selectProfessorAtivo').value;
+            const container = document.getElementById('agendaProfessor');
+            container.innerHTML = '';
+
+            if(!prof) return;
+
+            const minhasAulas = aulas.filter(a => a.professor === prof);
+            
+            if(minhasAulas.length === 0) {
+                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">Não encontramos aulas para você.</p>`;
+                return;
+            }
+
+            minhasAulas.forEach(a => {
+                container.innerHTML += `
+                    <div class="card ${a.presenca ? 'presenca-confirmada' : ''}">
+                        <h3>${a.materia} - ${a.turma}</h3>
+                        <p>${a.dia} às ${a.horario} (${a.duracao}min)</p>
+                        <p style="margin-bottom: 15px;">Sala: ${a.sala}</p>
+                        <button class="btn ${a.presenca ? 'btn-secondary' : 'btn-success'}" style="width: 100%" 
+                                onclick="confirmarPresenca('${a.id}')" ${a.presenca ? 'disabled' : ''}>
+                            ${a.presenca ? '✅ Presença Confirmada' : '✔️ Registrar Presença Agora'}
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function confirmarPresenca(id) {
+            const aula = aulas.find(a => a.id === id);
+            if(aula) {
+                aula.presenca = true;
+                atualizarBanco();
+                atualizarAgendaProfessor();
+                alert("Sua presença foi enviada para o sistema administrativo!");
+            }
+        }
+
+        // Administrativo
+        function preencherTabela() {
+            const corpo = document.getElementById('tabelaCorpo');
+            corpo.innerHTML = '';
+            aulas.forEach(a => {
+                corpo.innerHTML += `
+                    <tr>
+                        <td>${a.dia}</td>
+                        <td>${a.horario}</td>
+                        <td><strong>${a.materia}</strong><br><small>${a.turma}</small></td>
+                        <td>${a.professor}</td>
+                        <td>${a.presenca ? '<span style="color: green">✅ Presente</span>' : '<span style="color: orange">⏳ Pendente</span>'}</td>
+                        <td>
+                            <button class="btn btn-danger" style="padding: 5px 10px; font-size: 0.7rem;" onclick="deletar('${a.id}')">Excluir</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function deletar(id) {
+            if(confirm("Tem certeza que deseja remover esta aula?")) {
+                aulas = aulas.filter(a => a.id !== id);
+                atualizarBanco();
+                preencherTabela();
+            }
+        }
+
+        function limparTudo() {
+            if(confirm("ATENÇÃO: Isso apagará TODOS os dados permanentemente. Continuar?")) {
+                aulas = [];
+                atualizarBanco();
+                navegar('adicionar');
+            }
+        }
+
+        function preencherFiltros() {
+            const select = document.getElementById('filterTurma');
+            const turmas = [...new Set(aulas.map(a => a.turma))].sort();
+            select.innerHTML = '<option value="">Todas as Turmas</option>';
+            turmas.forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
+        }
+    </script>
+</body>
+</html>
