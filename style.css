@@ -4,18 +4,40 @@ margin: 0;
 padding: 0;
 }
 
+/* ===== PÁGINA INICIAL ===== */
+
 .home {
 background: linear-gradient(135deg, #2c3e50, #3498db);
 color: white;
 }
+
+/* ===== HEADER ===== */
 
 .home-header {
 display: flex;
 justify-content: space-between;
 align-items: center;
 padding: 20px 50px;
+background: linear-gradient(135deg, #2c3e50, #3498db);
 border-bottom: 2px solid rgba(255,255,255,0.15);
 }
+
+/* COR DOS LINKS DO MENU */
+
+.home-header nav a {
+color: white;
+text-decoration: none;
+font-weight: bold;
+margin-left: 20px;
+}
+
+.home-header nav a:hover,
+.home-header nav a.active {
+text-decoration: underline;
+color: white;
+}
+
+/* ===== HERO ===== */
 
 .hero {
 text-align: center;
@@ -33,6 +55,8 @@ justify-content: center;
 gap: 20px;
 }
 
+/* ===== BOTÕES ===== */
+
 .btn {
 padding: 12px 25px;
 border-radius: 30px;
@@ -49,6 +73,8 @@ color: #2c3e50;
 border: 2px solid white;
 color: rgb(255, 255, 255);
 }
+
+/* ===== FEATURES ===== */
 
 .features {
 background: white;
@@ -68,12 +94,24 @@ width: 280px;
 text-align: center;
 }
 
+/* ===== CONTEÚDO INTERNO ===== */
+
+.content {
+padding: 60px 20px;
+text-align: center;
+}
+
+/* ===== FOOTER ===== */
+
 footer {
 text-align: center;
 padding: 20px 0;
 background: #2c3e50;
 color: white;
+margin-top: 40px;
 }
+
+/* ===== MODAL ===== */
 
 .modal {
 position: fixed;
@@ -121,9 +159,18 @@ display: flex;
 flex-direction: column;
 }
 
+/* ===== MENU MOBILE ===== */
+
 .menu-toggle {
 display: none;
+background: none;
+border: none;
+color: white;
+font-size: 1.8rem;
+cursor: pointer;
 }
+
+/* ===== RESPONSIVO ===== */
 
 @media (max-width:768px){
 
@@ -143,6 +190,11 @@ padding:20px;
 
 .home-header nav.show{
 display:block;
+}
+
+.home-header nav a{
+display:block;
+margin:10px 0;
 }
 
 }
