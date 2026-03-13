@@ -9,6 +9,10 @@ const loginForm = document.getElementById('loginForm');
 
 let currentRole = null;
 
+function safeAddEventListener(el, event, handler) {
+    if (el) el.addEventListener(event, handler);
+}
+
 
 function openLogin(role){
 
@@ -34,7 +38,7 @@ currentRole = null;
 }
 
 
-btnProfessor.addEventListener('click', function(e){
+safeAddEventListener(btnProfessor, 'click', function(e){
 
 e.preventDefault();
 
@@ -43,7 +47,7 @@ openLogin('professor');
 });
 
 
-btnDirecao.addEventListener('click', function(e){
+safeAddEventListener(btnDirecao, 'click', function(e){
 
 e.preventDefault();
 
@@ -52,10 +56,10 @@ openLogin('direcao');
 });
 
 
-closeModal.addEventListener('click', closeLogin);
+safeAddEventListener(closeModal, 'click', closeLogin);
 
 
-modal.addEventListener('click', function(e){
+safeAddEventListener(modal, 'click', function(e){
 
 if(e.target === modal){
 
@@ -66,7 +70,7 @@ closeLogin();
 });
 
 
-loginForm.addEventListener('submit', function(e){
+safeAddEventListener(loginForm, 'submit', function(e){
 
 e.preventDefault();
 
@@ -95,8 +99,7 @@ alert('Dados inválidos');
 const menuToggle = document.querySelector('.menu-toggle');
 const headerNav = document.querySelector('.home-header nav');
 
-menuToggle.addEventListener('click', function(){
-
-headerNav.classList.toggle('show');
+safeAddEventListener(menuToggle, 'click', function(){
+    if (headerNav) headerNav.classList.toggle('show');
 
 });
