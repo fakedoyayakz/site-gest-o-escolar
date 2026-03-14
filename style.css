@@ -1,187 +1,205 @@
-body, html{
-font-family: Arial, Helvetica, sans-serif;
-margin:0;
-padding:0;
+/* ===== Geral ===== */
+body, html {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Garante altura mínima da tela */
 }
 
-.home{
-background: linear-gradient(135deg,#005461,#0C7779);
-color:white;
-min-height:100vh;
+.home {
+    background: linear-gradient(135deg, #005461, #0C7779);
+    color: white;
 }
 
-.home-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 50px;
-background:#005461;
+/* ===== Cabeçalho ===== */
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background: #005461;
 }
 
-.home-header nav a{
-color:white;
-text-decoration:none;
-font-weight:bold;
-margin-left:20px;
+.home-header nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 20px;
 }
 
-.home-header nav a:hover{
-color:#3BC1A8;
+.home-header nav a:hover {
+    color: #3BC1A8;
 }
 
-.hero{
-text-align:center;
-padding:100px 20px;
+/* ===== Hero ===== */
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+    flex: 1;
 }
 
-.hero h1{
-font-size:42px;
-margin-bottom:20px;
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
 }
 
-.hero-buttons{
-display:flex;
-justify-content:center;
-gap:20px;
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
 
-.btn{
-padding:12px 25px;
-border-radius:30px;
-text-decoration:none;
-font-weight:bold;
+.btn {
+    padding: 12px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.primary{
-background:#3BC1A8;
-color:#005461;
+.primary {
+    background: #3BC1A8;
+    color: #005461;
+    border: none;
 }
 
-.secondary{
-border:2px solid #3BC1A8;
-color:#3BC1A8;
+.secondary {
+    border: 2px solid #3BC1A8;
+    color: #3BC1A8;
+    background: none;
 }
 
-.features{
-background:white;
-color:#005461;
-display:flex;
-justify-content:center;
-gap:30px;
-padding:60px 20px;
-flex-wrap:wrap;
+/* ===== Features ===== */
+.features {
+    background: white;
+    color: #005461;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 60px 20px;
+    flex-wrap: wrap;
+    flex: 1;
 }
 
-.feature-card{
-background:#f4f6f9;
-padding:30px;
-border-radius:15px;
-width:280px;
-text-align:center;
-border-top:5px solid #249E94;
+.feature-card {
+    background: #f4f6f9;
+    padding: 30px;
+    border-radius: 15px;
+    width: 280px;
+    text-align: center;
+    border-top: 5px solid #249E94;
 }
 
-footer{
-text-align:center;
-padding:40px;
-background:#000000;
-color:white;
-
+/* ===== Footer ===== */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #005461;
+    color: white;
 }
 
-/* ===== Menu mobile (desktop hide) ===== */
-.menu-toggle{
-    display:none;
-    background:none;
-    border:none;
-    color:white;
-    font-size:1.6rem;
-    cursor:pointer;
+/* ===== Menu mobile ===== */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.6rem;
+    cursor: pointer;
 }
 
 @media(max-width:768px){
-    .menu-toggle{
-        display:block;
+    .menu-toggle {
+        display: block;
     }
 
-    .home-header nav{
-        display:none;
-        position:absolute;
-        top:64px;
-        left:0;
-        right:0;
-        background:linear-gradient(135deg,#005461,#0C7779);
-        padding:10px 20px;
-        z-index:200;
+    .home-header nav {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg,#005461,#0C7779);
+        padding: 10px 20px;
+        z-index: 200;
     }
 
-    .home-header nav.show{
-        display:block;
+    .home-header nav.show {
+        display: block;
     }
 
-    .home-header nav a{
-        display:block;
-        margin:10px 0;
+    .home-header nav a {
+        display: block;
+        margin: 10px 0;
     }
 }
 
 /* ===== Modal Login ===== */
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.6);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index: 1000;;
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
 }
 
-.modal.hide{
-    display:none;
+.modal.hide {
+    display: none;
 }
 
-.modal-content{
-    background:#ffffff;
-    color:#003845;
-    width:min(90%,400px);
+.modal-content {
+    background: #ffffff;
+    color: #003845;
+    width: min(90%,400px);
     padding: 39px;
-    border-radius:12px;
-    box-shadow:0 8px 24px rgba(0,0,0,.35);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
 }
 
-.modal-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:10px;
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-.close-btn{
-    background:none;
-    border:none;
-    font-size:1.5rem;
-    font-weight:700;
-    cursor:pointer;
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
 }
 
-.form-login .form-group{
-    margin-bottom:12px;
+.form-login .form-group {
+    margin-bottom: 12px;
 }
 
-.form-login label{
-    display:block;
-    margin-bottom:6px;
-    font-weight:600;
+.form-login label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
 }
 
-.form-login input{
-    width:100%;
-    padding:10px;
-    border:1px solid #c0c0c0;
-    border-radius:6px;
+.form-login input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #c0c0c0;
+    border-radius: 6px;
 }
 
-.form-login button{
-    margin-top:8px;
-    width:100%;
+.form-login button {
+    margin-top: 8px;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #3BC1A8;
+    color: #005461;
+    font-weight: bold;
+    cursor: pointer;
 }
