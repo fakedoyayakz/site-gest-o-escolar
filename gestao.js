@@ -1,15 +1,26 @@
 // ===== DADOS =====
+const STORAGE_KEY = 'aulas';
 let aulas = [];
 
-// Carregar dados do backend
-async function carregarDados() {
-    try {
-        const response = await fetch('listar_aulas.php');
-        aulas = await response.json();
-        atualizarInterface();
-    } catch (error) {
-        console.error("Erro ao carregar dados:", error);
+function carregarDados() {
+    const dados = localStorage.getItem(STORAGE_KEY);
+    if (dados) {
+        try {
+            aulas = JSON.parse(dados);
+        } catch (error) {
+            console.error('Erro ao parsear dados do localStorage', error);
+            aulas = [];
+        }
     }
+    atualizarInterface();
+}
+
+function salvarDados() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(aulas));
+}
+
+function gerarId() {
+    return '_' + Math.random().toString(36).substr(2, 9);
 }
 
 // Atualizar interface
@@ -73,40 +84,72 @@ document.getElementById('formAula').addEventListener('submit', (e) => {
 });
 
 // ===== SALVAR AULA =====
-async function salvarAula(dados) {
-
-    try {
-
-        const resposta = await fetch('salvar_aula.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(dados).toString()
-        });
-
-        const json = await resposta.json();
-
-        if (json.status === 'success') {
-
-            await carregarDados();
-
-            document.getElementById('formAula').reset();
-
-            const msg = document.getElementById('mensagemSucesso');
-            msg.style.display = 'block';
-
-            setTimeout(() => {
-                msg.style.display = 'none';
-            }, 3000);
-
-        } else {
-            alert("Erro ao salvar aula");
-        }
-
-    } catch (error) {
-        console.error(error);
-        alert("Erro no servidor");
+function salvarAula(dados) {
+    if (!dados.id) {
+        dados.id = gerarId();
     }
 
+    const index = aulas.findIndex(a => a.id === dados.id);
+
+    if (index === -1) {
+        aulas.push(dados);
+    } else {
+        aulas[index] = dados;
+    }
+
+    salvarDados();
+    atualizarInterface();
+
+    document.getElementById('formAula').reset();
+
+    const msg = document.getElementById('mensagemSucesso');
+    if (msg) {
+        msg.style.display = 'block';
+        setTimeout(() => {
+            msg.style.display = 'none';
+        }, 3000);
+    }
+
+    fecharModal();
+}
+
+// ===== EDITAR AULA =====
+function editarAula(id) {
+    const aula = aulas.find(a => a.id === id);
+    if (!aula) return;
+
+    document.getElementById('editarId').value = aula.id;
+    document.getElementById('editarDia').value = aula.dia;
+    document.getElementById('editarHorario').value = aula.horario;
+    document.getElementById('editarDuracao').value = aula.duracao;
+    document.getElementById('editarTurma').value = aula.turma;
+    document.getElementById('editarProfessor').value = aula.professor;
+    document.getElementById('editarMateria').value = aula.materia;
+    document.getElementById('editarSala').value = aula.sala;
+    document.getElementById('editarObservacoes').value = aula.observacoes;
+
+    abrirModal();
+}
+
+const formEditar = document.getElementById('formEditar');
+if (formEditar) {
+    formEditar.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const dados = {
+            id: document.getElementById('editarId').value,
+            dia: document.getElementById('editarDia').value,
+            horario: document.getElementById('editarHorario').value,
+            duracao: document.getElementById('editarDuracao').value,
+            turma: document.getElementById('editarTurma').value,
+            professor: document.getElementById('editarProfessor').value,
+            materia: document.getElementById('editarMateria').value,
+            sala: document.getElementById('editarSala').value,
+            observacoes: document.getElementById('editarObservacoes').value
+        };
+
+        salvarAula(dados);
+    });
 }
 
 // ===== FILTROS =====
@@ -295,35 +338,19 @@ async function deletarAula(id) {
 
     if (!confirm("Deseja deletar esta aula?")) return;
 
-    const resposta = await fetch('deletar_aula.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'id=' + encodeURIComponent(id)
-    });
-
-    const json = await resposta.json();
-
-    if (json.status === 'success') {
-        carregarDados();
-    }
-
+    aulas = aulas.filter(a => a.id !== id);
+    salvarDados();
+    atualizarInterface();
 }
 
 // ===== LIMPAR TODOS =====
-async function limparTodosDados() {
+function limparTodosDados() {
 
     if (!confirm("Apagar todas as aulas?")) return;
 
-    const resposta = await fetch('deletar_todas_aulas.php', {
-        method: 'POST'
-    });
-
-    const json = await resposta.json();
-
-    if (json.status === 'success') {
-        carregarDados();
-    }
-
+    aulas = [];
+    salvarDados();
+    atualizarInterface();
 }
 
 // ===== MODAL =====

@@ -18,11 +18,24 @@ box-sizing: border-box;
 --transition: all 0.3s ease;
 }
 
+:root {
+--primary-color: #005461;
+--secondary-color: #0C7779;
+--success-color: #27ae60;
+--danger-color: #e74c3c;
+--warning-color: #f39c12;
+--light-bg: #092d39;
+--white: #ffffff;
+--shadow: 0 2px 8px rgba(0,0,0,0.1);
+--transition: all 0.3s ease;
+}
+
 body {
 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-background-color: var(--light-bg);
-color: var(--secondary-color);
+background: linear-gradient(135deg,#005461,#0C7779);
+color: rgb(24, 23, 23);
 line-height: 1.6;
+min-height: 100vh;
 }
 
 /* HEADER */
@@ -32,7 +45,7 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:20px 50px;
-background:linear-gradient(135deg,#2c3e50,#3498db);
+background:#005461;
 color:white;
 }
 
@@ -118,6 +131,41 @@ font-size:2rem;
 margin-bottom:20px;
 }
 
+/* ===== Menu mobile (desktop hide) ===== */
+.menu-toggle{
+    display:none;
+    background:none;
+    border:none;
+    color:white;
+    font-size:1.6rem;
+    cursor:pointer;
+}
+
+@media(max-width:768px){
+    .menu-toggle{
+        display:block;
+    }
+
+    .home-header nav{
+        display:none;
+        position:absolute;
+        top:64px;
+        left:0;
+        right:0;
+        background:linear-gradient(135deg,#2c3e50,#3498db);
+        padding:10px 20px;
+        z-index:200;
+    }
+
+    .home-header nav.show{
+        display:block;
+    }
+
+    .home-header nav a{
+        display:block;
+        margin:10px 0;
+    }
+}
 /* FILTROS */
 
 .filters{
@@ -160,7 +208,7 @@ color:white;
 /* FORMULÁRIO */
 
 .form-aula{
-background:white;
+background:var(--primary-color);
 padding:30px;
 border-radius:8px;
 box-shadow:var(--shadow);
