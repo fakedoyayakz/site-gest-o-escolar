@@ -1,443 +1,223 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Gestão Escolar - Horários</title>
-
-<link rel="stylesheet" href="gestao.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão Escolar - Horários</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
-
-<body class="home">
-
-<header class="home-header">
-
-<h1>Sistema de Gestão Escolar</h1>
-
-<button class="menu-toggle">☰</button>
-
-<nav>
-
-<a href="index.html">Início</a>
-<a href="gestao.html" class="active">Gestão</a>
-<a href="professores.html">Professores</a>
-<a href="relatorios.html">Relatórios</a>
-
-</nav>
-
-</header>
-
-
-<div class="container">
-
-<header class="header">
-
-<div class="header-content">
-
-<h1>📚 Gestão de Horários Escolares</h1>
-
-<p>Organize e gerencie os horários da sua escola</p>
-
-</div>
-
-</header>
-
-
-<nav class="navbar">
-
-<button class="nav-btn active" data-view="horarios">📅 Horários</button>
-
-<button class="nav-btn" data-view="adicionar">➕ Adicionar Aula</button>
-
-<button class="nav-btn" data-view="gerenciar">⚙️ Gerenciar</button>
-
-</nav>
-
-
-<main class="main-content">
-
-
-<section id="horarios" class="view active">
-
-<div class="section-header">
-
-<h2>Visualizar Horários</h2>
-
-<div class="filters">
-
-<select id="filterTurma" class="filter-select">
-
-<option value="">Todas as turmas</option>
-
-</select>
-
-
-<select id="filterDia" class="filter-select">
-
-<option value="">Todos os dias</option>
-
-<option value="Segunda">Segunda-feira</option>
-
-<option value="Terça">Terça-feira</option>
-
-<option value="Quarta">Quarta-feira</option>
-
-<option value="Quinta">Quinta-feira</option>
-
-<option value="Sexta">Sexta-feira</option>
-
-</select>
-
-
-<button class="btn btn-secondary" onclick="limparFiltros()">
-
-Limpar Filtros
-
-</button>
-
-</div>
-
-</div>
-
-
-<div class="horarios-grid" id="horariosGrid"></div>
-
-</section>
-
-
-
-<section id="adicionar" class="view">
-
-<div class="section-header">
-
-<h2>Adicionar Nova Aula</h2>
-
-</div>
-
-
-<form id="formAula" class="form-aula">
-
-<div class="form-row">
-
-<div class="form-group">
-
-<label for="dia">Dia da semana *</label>
-
-<select id="dia" required>
-
-<option value="">Selecione</option>
-
-<option value="Segunda">Segunda-feira</option>
-
-<option value="Terça">Terça-feira</option>
-
-<option value="Quarta">Quarta-feira</option>
-
-<option value="Quinta">Quinta-feira</option>
-
-<option value="Sexta">Sexta-feira</option>
-
-</select>
-
-</div>
-
-
-<div class="form-group">
-
-<label for="horario">Horário de início *</label>
-
-<input type="time" id="horario" required>
-
-</div>
-
-
-<div class="form-group">
-
-<label for="duracao">Duração *</label>
-
-<input type="number" id="duracao" min="30" max="180" value="50" required>
-
-</div>
-
-</div>
-
-
-
-<div class="form-row">
-
-<div class="form-group">
-
-<label for="turma">Turma *</label>
-
-<input type="text" id="turma" required>
-
-</div>
-
-
-<div class="form-group">
-
-<label for="professor">Professor *</label>
-
-<input type="text" id="professor" required>
-
-</div>
-
-
-<div class="form-group">
-
-<label for="materia">Matéria *</label>
-
-<input type="text" id="materia" required>
-
-
-</div>
-
-<div class="form-row">
-
-<div class="form-group">
-
-<label for="sala">Sala *</label>
-
-<input type="text" id="sala" required>
-
-</div>
-
-
-<div class="form-group">
-
-<label for="observacoes">Observações</label>
-
-<input type="text" id="observacoes">
-
-</div>
-
-</div>
-
-
-<div class="form-actions">
-
-<button type="submit" class="btn btn-primary">
-
-Adicionar Aula
-
-</button>
-
-<button type="reset" class="btn btn-secondary">
-
-Apagar Hórario
-
-</button>
-
-</div>
-
-</form>
-
-
-<div id="mensagemSucesso" class="alert alert-success" style="display:none">
-
-✓ Aula adicionada com sucesso!
-
-</div>
-
-</section>
-
-
-
-<section id="gerenciar" class="view">
-
-<div class="section-header">
-
-<h2>Gerenciar Aulas</h2>
-
-</div>
-
-
-<div class="tabela-container">
-
-<table class="tabela-aulas">
-
-<thead>
-
-<tr>
-
-<th>Dia</th>
-<th>Horário</th>
-<th>Turma</th>
-<th>Professor</th>
-<th>Matéria</th>
-<th>Sala</th>
-<th>Ações</th>
-
-</tr>
-
-</thead>
-
-<tbody id="tabelaCorpo"></tbody>
-
-</table>
-
-</div>
-
-
-<div style="margin-top:20px">
-
-<button class="btn btn-danger" onclick="limparTodosDados()">
-
-🗑️ Limpar Todos os Dados
-
-</button>
-
-</div>
-
-</section>
-
-
-</main>
-
-
-
-<div id="modalEditar" class="modal" style="display:none">
-
-<div class="modal-content">
-
-<div class="modal-header">
-
-<h3>Editar Aula</h3>
-
-<button class="close-btn" onclick="fecharModal()">&times;</button>
-
-</div>
-
-
-<form id="formEditar" class="form-aula">
-
-<input type="hidden" id="editarId">
-
-
-<div class="form-row">
-
-<div class="form-group">
-
-<label>Dia</label>
-
-<select id="editarDia">
-
-<option value="Segunda">Segunda</option>
-<option value="Terça">Terça</option>
-<option value="Quarta">Quarta</option>
-<option value="Quinta">Quinta</option>
-<option value="Sexta">Sexta</option>
-
-</select>
-
-</div>
-
-
-<div class="form-group">
-
-<label>Horário</label>
-
-<input type="time" id="editarHorario">
-
-</div>
-
-
-<div class="form-group">
-
-<label>Duração</label>
-
-<input type="number" id="editarDuracao">
-
-</div>
-
-</div>
-
-
-<div class="form-row">
-
-<div class="form-group">
-
-<label>Turma</label>
-
-<input type="text" id="editarTurma">
-
-</div>
-
-
-<div class="form-group">
-
-<label>Professor</label>
-
-<input type="text" id="editarProfessor">
-
-</div>
-
-
-<div class="form-group">
-
-<label>Matéria</label>
-
-<input type="text" id="editarMateria">
-
-</div>
-
-</div>
-
-
-<div class="form-row">
-
-<div class="form-group">
-
-<label>Sala</label>
-
-<input type="text" id="editarSala">
-
-</div>
-
-
-<div class="form-group">
-
-<label>Observações</label>
-
-<input type="text" id="editarObservacoes">
-
-</div>
-
-</div>
-
-
-<div class="form-actions">
-
-<button type="submit" class="btn btn-primary">
-
-Salvar Alterações
-
-</button>
-
-<button type="button" class="btn btn-secondary" onclick="fecharModal()">
-
-Cancelar
-
-</button>
-
-</div>
-
-</form>
-
-</div>
-
-</div>
-
-
-</div>
-
-
-<script src="gestao.js"></script>
-
+<body class="dashboard">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">📘</div>
+        <div>
+          <h1>Gestão Escolar</h1>
+          <p>Painel do professor</p>
+        </div>
+      </div>
+      <div class="profile">
+        <div class="avatar">J</div>
+        <div>
+          <strong>João Santos</strong>
+          <span>Matemática</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="index.html">Dashboard</a>
+        <a href="gestao.html" class="active">Minha Grade</a>
+        <a href="professores.html">Alunos e Turmas</a>
+        <a href="relatorios.html">Relatórios</a>
+        <a href="#">Atestados</a>
+      </nav>
+      <button class="sidebar-logout">Sair</button>
+    </aside>
+    <main class="main-content">
+      <header class="topbar">
+        <button class="menu-toggle" aria-label="Abrir menu">☰</button>
+        <div class="topbar-actions">
+          <button class="topbar-user">J</button>
+        </div>
+      </header>
+      <section class="page-header">
+        <span class="page-badge">Gestão</span>
+        <h1>Gestão de Horários Escolares</h1>
+        <p>Organize, edite e visualize todos os horários da sua escola em um só lugar.</p>
+      </section>
+      <nav class="navbar">
+        <button class="nav-btn active" data-view="horarios">📅 Horários</button>
+        <button class="nav-btn" data-view="adicionar">➕ Adicionar Aula</button>
+        <button class="nav-btn" data-view="gerenciar">⚙️ Gerenciar</button>
+      </nav>
+      <section id="horarios" class="view active">
+        <div class="content-panel">
+          <div class="section-header">
+            <h2>Visualizar Horários</h2>
+            <div class="filters">
+              <select id="filterTurma" class="filter-select">
+                <option value="">Todas as turmas</option>
+              </select>
+              <select id="filterDia" class="filter-select">
+                <option value="">Todos os dias</option>
+                <option value="Segunda">Segunda-feira</option>
+                <option value="Terça">Terça-feira</option>
+                <option value="Quarta">Quarta-feira</option>
+                <option value="Quinta">Quinta-feira</option>
+                <option value="Sexta">Sexta-feira</option>
+              </select>
+              <button class="btn btn-secondary" onclick="limparFiltros()">Limpar Filtros</button>
+            </div>
+          </div>
+          <div class="horarios-grid" id="horariosGrid"></div>
+        </div>
+      </section>
+      <section id="adicionar" class="view">
+        <div class="content-panel">
+          <div class="section-header">
+            <h2>Adicionar Nova Aula</h2>
+          </div>
+          <form id="formAula" class="form-aula">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="dia">Dia da semana *</label>
+                <select id="dia" required>
+                  <option value="">Selecione</option>
+                  <option value="Segunda">Segunda-feira</option>
+                  <option value="Terça">Terça-feira</option>
+                  <option value="Quarta">Quarta-feira</option>
+                  <option value="Quinta">Quinta-feira</option>
+                  <option value="Sexta">Sexta-feira</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="horario">Horário de início *</label>
+                <input type="time" id="horario" required>
+              </div>
+              <div class="form-group">
+                <label for="duracao">Duração *</label>
+                <input type="number" id="duracao" min="30" max="180" value="50" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="turma">Turma *</label>
+                <input type="text" id="turma" required>
+              </div>
+              <div class="form-group">
+                <label for="professor">Professor *</label>
+                <input type="text" id="professor" required>
+              </div>
+              <div class="form-group">
+                <label for="materia">Matéria *</label>
+                <input type="text" id="materia" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="sala">Sala *</label>
+                <input type="text" id="sala" required>
+              </div>
+              <div class="form-group">
+                <label for="observacoes">Observações</label>
+                <input type="text" id="observacoes">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Adicionar Aula</button>
+              <button type="reset" class="btn btn-secondary">Apagar Horário</button>
+            </div>
+          </form>
+          <div id="mensagemSucesso" class="alert alert-success" style="display:none">✓ Aula adicionada com sucesso!</div>
+        </div>
+      </section>
+      <section id="gerenciar" class="view">
+        <div class="content-panel">
+          <div class="section-header">
+            <h2>Gerenciar Aulas</h2>
+          </div>
+          <div class="tabela-container">
+            <table class="tabela-aulas">
+              <thead>
+                <tr>
+                  <th>Dia</th>
+                  <th>Horário</th>
+                  <th>Turma</th>
+                  <th>Professor</th>
+                  <th>Matéria</th>
+                  <th>Sala</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaCorpo"></tbody>
+            </table>
+          </div>
+          <div style="margin-top:20px;">
+            <button class="btn btn-danger" onclick="limparTodosDados()">🗑️ Limpar Todos os Dados</button>
+          </div>
+        </div>
+      </section>
+      <div id="modalEditar" class="modal" style="display:none">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Editar Aula</h3>
+            <button class="close-btn" onclick="fecharModal()">&times;</button>
+          </div>
+          <form id="formEditar" class="form-aula">
+            <input type="hidden" id="editarId">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Dia</label>
+                <select id="editarDia">
+                  <option value="Segunda">Segunda</option>
+                  <option value="Terça">Terça</option>
+                  <option value="Quarta">Quarta</option>
+                  <option value="Quinta">Quinta</option>
+                  <option value="Sexta">Sexta</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Horário</label>
+                <input type="time" id="editarHorario">
+              </div>
+              <div class="form-group">
+                <label>Duração</label>
+                <input type="number" id="editarDuracao">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Turma</label>
+                <input type="text" id="editarTurma">
+              </div>
+              <div class="form-group">
+                <label>Professor</label>
+                <input type="text" id="editarProfessor">
+              </div>
+              <div class="form-group">
+                <label>Matéria</label>
+                <input type="text" id="editarMateria">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Sala</label>
+                <input type="text" id="editarSala">
+              </div>
+              <div class="form-group">
+                <label>Observações</label>
+                <input type="text" id="editarObservacoes">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+              <button type="button" class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="../js/script.js"></script>
+  <script src="../js/gestao.js"></script>
 </body>
-
 </html>

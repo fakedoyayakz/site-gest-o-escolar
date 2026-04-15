@@ -1,42 +1,59 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>Gestão Escolar - Relatórios</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="relatórios.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão Escolar - Relatórios</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
-
-<body class="page relatorios">
-
-<header class="home-header">
-<h1>Sistema de Gestão Escolar</h1>
-
-<button class="menu-toggle">☰</button>
-
-<nav>
-<a href="index.html">Início</a>
-<a href="gestao.html">Gestão</a>
-<a href="professores.html">Professores</a>
-<a href="relatorios.html" class="active">Relatórios</a>
-</nav>
-
-</header>
-
-<main class="content">
-
-<h2>📊 Relatórios</h2>
-<p>Nesta seção estão disponíveis os relatórios de presença, horários e estatísticas.</p>
-
-</main>
-
-<footer>
-<p>© 2026 Sistema de Gestão Escolar</p>
-</footer>
-
-<script src="relatorios.js"></script>
-
+<body class="dashboard">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">📘</div>
+        <div>
+          <h1>Gestão Escolar</h1>
+          <p>Painel do professor</p>
+        </div>
+      </div>
+      <div class="profile">
+        <div class="avatar">J</div>
+        <div>
+          <strong>João Santos</strong>
+          <span>Matemática</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="index.html">Dashboard</a>
+        <a href="gestao.html">Minha Grade</a>
+        <a href="professores.html">Alunos e Turmas</a>
+        <a href="relatorios.html" class="active">Relatórios</a>
+        <a href="#">Atestados</a>
+      </nav>
+      <button class="sidebar-logout">Sair</button>
+    </aside>
+    <main class="main-content">
+      <header class="topbar">
+        <button class="menu-toggle" aria-label="Abrir menu">☰</button>
+        <div class="topbar-actions">
+          <button class="topbar-user">J</button>
+        </div>
+      </header>
+      <section class="page-header">
+        <span class="page-badge">Relatórios</span>
+        <h1>Relatórios</h1>
+        <p>Nesta seção estão disponíveis os relatórios de presença, horários e estatísticas.</p>
+      </section>
+      <section class="content-panel">
+        <h2>Dados e Indicadores</h2>
+        <p>Use os relatórios para acompanhar frequência, ocupação de turmas e resultados.</p>
+      </section>
+      <footer class="footer">
+        © 2026 Sistema de Gestão Escolar
+      </footer>
+    </main>
+  </div>
+  <script src="../js/script.js"></script>
+  <script src="../js/relatorios.js"></script>
 </body>
 </html>
